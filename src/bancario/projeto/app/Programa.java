@@ -17,9 +17,9 @@ public class Programa {
 		boolean sair = true;
 		int o = 0;
 		
-		System.out.println("Sistema Bancário");
+		System.out.println("[Sistema Bancário]");
 		while(sair) {
-			System.out.println("\n\nDigite sua opção [Cliente]:\n"
+			System.out.println("\nDigite sua opção [Cliente]:\n"
 				    + "\n1 - Cadastrar um novo cliente;\n"
 				    + "2 - Remover seu cadastro;\n"
 				    + "3 - Consultar cliente pelo CPF;\n"
@@ -33,7 +33,7 @@ public class Programa {
 				    + "10 - Transferir entre contas;\n"
 				    + "11 - Consultar saldo de conta;\n"
 				    + "12 - Consultar balanço total do cliente;\n"
-				    + "13 - Sair do sistema.\n\n");
+				    + "13 - Sair do sistema.\n");
 			o = sc.nextInt();
 			switch (o) {
 			
@@ -187,30 +187,37 @@ public class Programa {
 			}
 			
 			
-			case 10: {
-			    System.out.println("Digite o CPF do cliente:");
-			    String cpf = sc.next();
-			    Cliente cliente = p.localizarClientePorCpf(cpf);
-			    if (cliente != null) {
+			case 10: { 
+			    System.out.println("Digite o CPF do cliente de origem:");
+			    String cpfOrigem = sc.next();
+			    Cliente clienteOrigem = p.localizarClientePorCpf(cpfOrigem);
+			    if (clienteOrigem != null) {
 			        System.out.println("Digite o número da conta de origem:");
 			        int numeroContaOrigem = sc.nextInt();
-			        ContaBancaria contaOrigem = cliente.localizarContaPorNumero(numeroContaOrigem);
+			        ContaBancaria contaOrigem = clienteOrigem.localizarContaPorNumero(numeroContaOrigem);
 			        if (contaOrigem != null) {
-			            System.out.println("Digite o número da conta de destino:");
-			            int numeroContaDestino = sc.nextInt();
-			            ContaBancaria contaDestino = cliente.localizarContaPorNumero(numeroContaDestino);
-			            if (contaDestino != null) {
-			                System.out.println("Digite o valor a ser transferido:");
-			                float quantia = sc.nextFloat();
-			                contaOrigem.transferir(contaDestino, quantia);
+			            System.out.println("Digite o CPF do cliente de destino:");
+			            String cpfDestino = sc.next();
+			            Cliente clienteDestino = p.localizarClientePorCpf(cpfDestino);
+			            if (clienteDestino != null) {
+			                System.out.println("Digite o número da conta de destino:");
+			                int numeroContaDestino = sc.nextInt();
+			                ContaBancaria contaDestino = clienteDestino.localizarContaPorNumero(numeroContaDestino);
+			                if (contaDestino != null) {
+			                    System.out.println("Digite o valor a ser transferido:");
+			                    float quantia = sc.nextFloat();
+			                    contaOrigem.transferir(contaDestino, quantia);
+			                } else {
+			                    System.out.println("Conta de destino não encontrada.");
+			                }
 			            } else {
-			                System.out.println("Conta destino não encontrada.");
+			                System.out.println("Cliente de destino não encontrado.");
 			            }
 			        } else {
-			            System.out.println("Conta origem não encontrada.");
+			            System.out.println("Conta de origem não encontrada.");
 			        }
 			    } else {
-			        System.out.println("Cliente não encontrado.");
+			        System.out.println("Cliente de origem não encontrado.");
 			    }
 			    break;
 			}
