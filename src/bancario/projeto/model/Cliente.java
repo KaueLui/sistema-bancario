@@ -33,7 +33,6 @@ public class Cliente implements Serializable {
 	public void removerConta(ContaBancaria c) {
 		if(contas.contains(c)) {
 			 contas.remove(c);
-			System.out.println("Conta removida com sucesso");
 		} else {
 			System.out.println("Esta conta não existe");
 		}

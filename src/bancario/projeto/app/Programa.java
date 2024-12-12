@@ -19,12 +19,12 @@ public class Programa {
 		
 		System.out.println("[Sistema Bancário]");
 		while(sair) {
-			System.out.println("\nDigite sua opção [Cliente]:\n"
+			System.out.println("\n=== Digite sua opção [Cliente]:\n"
 				    + "\n1 - Cadastrar um novo cliente;\n"
 				    + "2 - Remover seu cadastro;\n"
 				    + "3 - Consultar cliente pelo CPF;\n"
 				    + "4 - Listagem de clientes;\n"
-				    +"\nDigite sua opção [Conta]:\n\n"
+				    +"\n=== Digite sua opção [Conta]:\n\n"
 				    + "5 - Adicionar conta ao cliente;\n"
 				    + "6 - Listar contas de um cliente;\n"
 				    + "7 - Remover conta de um cliente;\n"
@@ -51,16 +51,22 @@ public class Programa {
 			
 			
 			case 2: {
-				Cliente temp;
-				String cpf;
-				System.out.println("Insira seu cpf: ");
-				cpf = sc.next();
-				temp = new Cliente();
-				temp.setCpf(cpf);
-				p.removerCliente(temp);
-				break;
+			    System.out.println("Insira o CPF do cliente:");
+			    String cpf = sc.next();
+			    Cliente cliente = p.localizarClientePorCpf(cpf);
+			    if (cliente != null) {
+			        if (!cliente.getContas().isEmpty()) {
+			            System.out.println("O cliente possui contas ativas. Remova todas as contas antes de excluir o cliente.");
+			        } else {
+			            p.removerCliente(cliente);
+			            System.out.println("Cliente removido com sucesso!");
+			        }
+			    } else {
+			        System.out.println("Cliente não encontrado.");
+			    }
+			    break;
 			}
-			
+
 			
 			case 3: {
 			    System.out.println("Digite o CPF do cliente que deseja consultar:");
@@ -132,7 +138,12 @@ public class Programa {
 			        int numeroConta = sc.nextInt();
 			        ContaBancaria conta = cliente.localizarContaPorNumero(numeroConta);
 			        if (conta != null) {
-			            cliente.removerConta(conta);
+			            if (conta.getSaldo() > 0) {
+			                System.out.println(cliente.getNome() + ", sua operação não pode ser efetuada, a conta ainda possui saldo.");
+			            } else {
+			                cliente.removerConta(conta);
+			                System.out.println("Conta removida com sucesso!");
+			            }
 			        } else {
 			            System.out.println("Conta não encontrada.");
 			        }

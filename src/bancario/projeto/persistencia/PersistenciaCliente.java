@@ -33,7 +33,6 @@ public class PersistenciaCliente {
 	    for (Cliente cliente : clientes) {
 	        if (cliente.getCpf().equals(c.getCpf())) {
 	            clientes.remove(cliente);
-	            System.out.println("Cliente removido com sucesso");
 	            return;
 	        }
 	    }
@@ -55,7 +54,7 @@ public class PersistenciaCliente {
 			clientes.set(index, c);
 			System.out.println("Cliente foi atualizada");
 		} else {
-			System.out.println("Cliente n�o encontrado");
+			System.out.println("Cliente não encontrado");
 		}
 	}
 	
